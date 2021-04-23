@@ -1,0 +1,61 @@
+﻿@using Microsoft.Extensions.WebEncoders.Testing
+@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Required/Elective Course</h3>
+
+<table align="center" class="table" style="width: 70%; padding: 5px; text-align: center;">
+    <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Required Course</caption>
+    <thead>
+        <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+            <th>Credit</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        var requiredCourses = Model.Where(o => o.Type == "Required");
+        foreach (Course course in requiredCourses)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelCourses => course.Id)</td>
+                <td>@Html.DisplayFor(modelCourses => course.Name)</td>
+                <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<table align="center" class="table" style="width: 70%; padding: 5px; text-align: center;">
+    <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Elective Course</caption>
+    <thead>
+        <tr>
+            <th>Course Id</th>
+            <th>Course Name</th>
+            <th>Credit</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        var electivecCourses = Model.Where(o => o.Type == "Elective");
+        foreach (Course course in electivecCourses)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelCourses => course.Id)</td>
+                <td>@Html.DisplayFor(modelCourses => course.Name)</td>
+                <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<style>
+    th, td {
+        border-bottom: 1px solid #AAAAAA;
+    }
+</style>
