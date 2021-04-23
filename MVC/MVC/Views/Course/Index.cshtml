@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h3>Required/Elective Course</h3>
+<h3>Course List</h3>
 
 <table align="center" class="table" style="width: 70%; padding: 5px; text-align: center;">
     <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Required Course</caption>
@@ -41,8 +41,8 @@
     </thead>
     <tbody>
     @{
-        var electivecCourses = Model.Where(o => o.Type == "Elective");
-        foreach (Course course in electivecCourses)
+        var electiveCourses = Model.Where(o => o.Type == "Elective");
+        foreach (Course course in electiveCourses)
         {
             <tr>
                 <td>@Html.DisplayFor(modelCourses => course.Id)</td>

@@ -13,11 +13,13 @@ namespace MVC.Controllers
     {
         private readonly ICourseRepo _courseRepo;
         private readonly ICurrentCourseService _currentCourseService;
+        private readonly IMyCourseService _myCourseService;
 
-        public CourseManagementController(ICourseRepo courseRepo, ICurrentCourseService currentCourseService)
+        public CourseManagementController(ICourseRepo courseRepo, ICurrentCourseService currentCourseService, IMyCourseService myCourseService)
         {
             _courseRepo = courseRepo;
             _currentCourseService = currentCourseService;
+            _myCourseService = myCourseService;
         }
 
         public IActionResult Index()
@@ -40,7 +42,7 @@ namespace MVC.Controllers
         public IActionResult DeleteCourse(int courseNo)
         {
             _currentCourseService.DeleteCourse(courseNo);
-            // delete My course by No
+            _myCourseService.DeleteCourse(courseNo);
             return RedirectToAction("Index");
         }
     }

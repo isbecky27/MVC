@@ -4,7 +4,7 @@
 @model CurrentCourse
 @{
     ViewData["Title"] = "Index";
-    List<Course> Courses = ViewBag.Courses;
+    List<Course> courses = ViewBag.Courses;
 }
 
 <h3>Course Management</h3>
@@ -16,7 +16,7 @@
             <label asp-for="Id">Course Name：</label>
             <select asp-for="Id" class="form-control col-lg-4" style="display: inline;">
                 <option selected="selected"></option>
-                @foreach (var course in Courses)
+                @foreach (var course in courses)
                 {
                     <option value="@course.Id">@course.Name</option>
                 }
@@ -43,7 +43,7 @@
 </div>
 <div>
     <table class="table" style="width: 100%; padding: 5px; text-align: center;">
-        <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Current Courses</caption>
+        <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Current Course</caption>
         <thead>
             <tr>
                 <th>Course No.</th>
@@ -61,7 +61,7 @@
             @{
                 foreach (CurrentCourse currentCourse in ViewBag.CurrentCourses)
                 {
-                    var course = Courses.Where(O => O.Id == currentCourse.Id).FirstOrDefault();
+                    var course = courses.FirstOrDefault(O => O.Id == currentCourse.Id);
                     <tr>
                         <td>@Html.DisplayFor(modelCourses => currentCourse.CourseNo)</td>
                         <td>@Html.DisplayFor(modelCourses => currentCourse.Id)</td>

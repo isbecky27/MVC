@@ -7,10 +7,9 @@ namespace MVC.Controllers
 {
     public class MyCourseController : Controller
     {
-
+        private readonly ICourseRepo _courseRepo;
         private readonly ICurrentCourseService _currentCourseService;
         private readonly IMyCourseService _myCourseService;
-        private readonly ICourseRepo _courseRepo;
 
         public MyCourseController(ICourseRepo courseRepo, ICurrentCourseService currentCourseService, IMyCourseService myCourseService)
         {

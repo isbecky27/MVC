@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\img\snowball.gif" />
+    <None Include="wwwroot\img\snowball.png" />
+  </ItemGroup>
+
 </Project>

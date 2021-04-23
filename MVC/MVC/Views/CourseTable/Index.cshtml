@@ -3,15 +3,17 @@
 @model IEnumerable<CurrentCourse>
 @{
     ViewData["Title"] = "Index";
-    List<Course> Courses = ViewBag.Courses;
-    List<int> MyCourseNo = ViewBag.MyCourseNo;
+    List<Course> courses = ViewBag.Courses;
+    List<CurrentCourse> myCourses = ViewBag.MyCourses;
+    var myCourseNo = myCourses.Select(o => o.CourseNo);
+    var myCourseId = myCourses.Select(o => o.Id);
 }
 
-<h3>Course Table</h3>
-
+<h3>Course Timetable</h3>
+<p class="text-info">* The Course with same Course Id can only be selected once.</p>
 <div>
     <table class="table" style="width: 100%; padding: 5px; text-align: center;">
-        <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Current Courses</caption>
+        <caption style="caption-side: top; text-align: center; font-size: 1.8em; color: black;">Current Course</caption>
         <thead>
         <tr>
             <th>Course No.</th>
@@ -30,80 +32,38 @@
         @{
             foreach (CurrentCourse currentCourse in Model)
             {
-                var course = Courses.Where(O => O.Id == currentCourse.Id).FirstOrDefault();
-                    <tr>
-                        <td>@Html.DisplayFor(modelCourses => currentCourse.CourseNo)</td>
-                        <td>@Html.DisplayFor(modelCourses => currentCourse.Id)</td>
-                        <td>@Html.DisplayFor(modelCourses => course.Name)</td>
-                        <td>@Html.DisplayFor(modelCourses => course.Type)</td>
-                        <td>@Html.DisplayFor(modelCourses => currentCourse.Teacher)</td>
-                        <td>@Html.DisplayFor(modelCourses => currentCourse.Time)</td>
-                        <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
-                        <td>@Html.DisplayFor(modelCourses => currentCourse.SizeLimits)</td>
-                        <td>@Html.DisplayFor(modelCourses => currentCourse.RegisteredNumbers)</td>
-                        @if (currentCourse.RegisteredNumbers < currentCourse.SizeLimits && !MyCourseNo.Contains(currentCourse.Id))
-                        {
-                            <td>@Html.ActionLink("Add", "AddCourse", routeValues: new { courseNo = currentCourse.CourseNo }, new { @class = "btn btn-success" })</td>
-                        }
-                        else
-                        {
-                            <td>@Html.ActionLink("Add", "AddCourse", routeValues: new { courseNo = currentCourse.CourseNo }, new { @class = "btn btn-success disabled" })</td>
-                        }
-                    </tr>
+                var course = courses.Where(O => O.Id == currentCourse.Id).FirstOrDefault();
+                <tr>
+                    <td>@Html.DisplayFor(modelCourses => currentCourse.CourseNo)</td>
+                    <td>@Html.DisplayFor(modelCourses => currentCourse.Id)</td>
+                    <td>@Html.DisplayFor(modelCourses => course.Name)</td>
+                    <td>@Html.DisplayFor(modelCourses => course.Type)</td>
+                    <td>@Html.DisplayFor(modelCourses => currentCourse.Teacher)</td>
+                    <td>@Html.DisplayFor(modelCourses => currentCourse.Time)</td>
+                    <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
+                    <td>@Html.DisplayFor(modelCourses => currentCourse.SizeLimits)</td>
+                    <td>@Html.DisplayFor(modelCourses => currentCourse.RegisteredNumbers)</td>
+                    @if (myCourseNo.Contains(currentCourse.CourseNo))
+                    {
+                        <td>@Html.ActionLink("Added", "AddCourse", routeValues: new { courseNo = currentCourse.CourseNo }, new { @class = "btn btn-secondary disabled" })</td>
+                    }
+                    else if (currentCourse.RegisteredNumbers < currentCourse.SizeLimits && !myCourseId.Contains(currentCourse.Id))
+                    {
+                        <td>@Html.ActionLink("Add", "AddCourse", routeValues: new { courseNo = currentCourse.CourseNo }, new { @class = "btn btn-success" })</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Add", "AddCourse", routeValues: new { courseNo = currentCourse.CourseNo }, new { @class = "btn btn-success disabled" })</td>
+                    }
+                </tr>
             }
         }
         </tbody>
     </table>
 </div>
 
-@*<table class="table" style="width:100%; padding:5px; text-align: center;">
-    <thead>
-        <tr>
-            <th>Course Id</th>
-            <th>Course Name</th>
-            <th>Course Time</th>
-            <th>Credit</th>
-            <th>Size Limits</th>
-            <th>Registered Numbers</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var course in Model)
-        {
-        <tr>
-            <td>@Html.DisplayFor(modelCourses => course.Id)</td>
-            <td>@Html.DisplayFor(modelCourses => course.Name)</td>
-            <td>@Html.DisplayFor(modelCourses => course.Time)</td>
-            <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
-            <td>@Html.DisplayFor(modelCourses => course.SizeLimits)</td>
-            <td>@Html.DisplayFor(modelCourses => course.RegisteredNumbers)</td>
-            @if (course.RegisteredNumbers < course.SizeLimits)
-            {
-                <td>@Html.ActionLink("Add", "AddCourse", routeValues: new { id = course.Id }, new { @class = "btn btn-success" })</td>
-            }
-            else
-            {
-                <td>
-                    @Html.ActionLink("Add", "AddCourse", routeValues: new { id = course.Id }, new { @class = "btn btn-success disabled" })
-                </td>
-            }
-        </tr>
-        }
-    </tbody>
-</table>*@
-
 <style>
     th, td {
         border-bottom: 1px solid #AAAAAA;
     }
 </style>
-
-@section scripts{
-    <script>
-        $("button").click(function () {
-            var courseName = $(this).val();
-            alert("add " + courseName + " into Class Schedule");
-        });
-    </script>
-}

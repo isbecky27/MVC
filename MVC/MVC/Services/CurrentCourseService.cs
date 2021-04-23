@@ -11,18 +11,7 @@ namespace MVC.Services
     {
         private static int _courseNo = 1;
 
-        private readonly List<CurrentCourse> _currentCourses = new List<CurrentCourse>()
-        {
-            new CurrentCourse()
-            {
-                CourseNo = 0,
-                Id = 2,
-                Time = "2EF",
-                Teacher = "test",
-                SizeLimits = 5
-            }
-
-        };
+        private readonly List<CurrentCourse> _currentCourses = new List<CurrentCourse>();
         
         public List<CurrentCourse> GetCurrentCourses()
         {

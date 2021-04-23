@@ -25,8 +25,8 @@ namespace MVC.Controllers
         public ActionResult Index()
         {
             var currentCourses = _currentCourseService.GetCurrentCourses();
-            ViewBag.Courses = _courseRepo.GetCourses().ToList();
-            ViewBag.MyCourseNo = _myCourseService.GetMyCoursesNo();
+            ViewBag.Courses = _courseRepo.GetCourses();
+            ViewBag.MyCourses = _myCourseService.GetMyCourses();
             return View("Index", currentCourses);
         }
 

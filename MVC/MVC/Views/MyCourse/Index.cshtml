@@ -3,7 +3,7 @@
 @model IEnumerable<CurrentCourse>
 @{
     ViewData["Title"] = "Index";
-    List<Course> Courses = ViewBag.Courses;
+    List<Course> courses = ViewBag.Courses;
 }
 
 <h3>My Course</h3>
@@ -26,69 +26,28 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                foreach (CurrentCourse currentCourse in Model)
-                {
-                    var course = Courses.Where(O => O.Id == currentCourse.Id).FirstOrDefault();
-                        <tr>
-                            <td>@Html.DisplayFor(modelCourses => currentCourse.CourseNo)</td>
-                            <td>@Html.DisplayFor(modelCourses => currentCourse.Id)</td>
-                            <td>@Html.DisplayFor(modelCourses => course.Name)</td>
-                            <td>@Html.DisplayFor(modelCourses => course.Type)</td>
-                            <td>@Html.DisplayFor(modelCourses => currentCourse.Teacher)</td>
-                            <td>@Html.DisplayFor(modelCourses => currentCourse.Time)</td>
-                            <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
-                            <td>@Html.DisplayFor(modelCourses => currentCourse.SizeLimits)</td>
-                            <td>@Html.DisplayFor(modelCourses => currentCourse.RegisteredNumbers)</td>
-                            <td>@Html.ActionLink("x", "DeleteCourse", new { courseNo = currentCourse.CourseNo }, new { @class = "close", @style = "color:red; float:none;" })</td>
-                        </tr>
-                }
+            @foreach (CurrentCourse currentCourse in Model)
+            {
+                var course = courses.FirstOrDefault(O => O.Id == currentCourse.Id);
+                    <tr>
+                        <td>@Html.DisplayFor(modelCourses => currentCourse.CourseNo)</td>
+                        <td>@Html.DisplayFor(modelCourses => currentCourse.Id)</td>
+                        <td>@Html.DisplayFor(modelCourses => course.Name)</td>
+                        <td>@Html.DisplayFor(modelCourses => course.Type)</td>
+                        <td>@Html.DisplayFor(modelCourses => currentCourse.Teacher)</td>
+                        <td>@Html.DisplayFor(modelCourses => currentCourse.Time)</td>
+                        <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
+                        <td>@Html.DisplayFor(modelCourses => currentCourse.SizeLimits)</td>
+                        <td>@Html.DisplayFor(modelCourses => currentCourse.RegisteredNumbers)</td>
+                        <td>@Html.ActionLink("x", "DeleteCourse", new { courseNo = currentCourse.CourseNo }, new { @class = "close", @style = "color:red; float:none;" })</td>
+                    </tr>
             }
         </tbody>
     </table>
 </div>
-
-@*<div>
-    <table class="table" style="width:100%; padding:5px; text-align: center;">
-        <thead>
-            <tr>
-                <th>Course Id</th>
-                <th>Course Name</th>
-                <th>Course Time</th>
-                <th>Credit</th>
-                <th>Size Limits</th>
-                <th>Registered Numbers</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var course in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelCourses => course.Id)</td>
-                <td>@Html.DisplayFor(modelCourses => course.Name)</td>
-                <td>@Html.DisplayFor(modelCourses => course.Time)</td>
-                <td>@Html.DisplayFor(modelCourses => course.Credit)</td>
-                <td>@Html.DisplayFor(modelCourses => course.SizeLimits)</td>
-                <td>@Html.DisplayFor(modelCourses => course.RegisteredNumbers)</td>
-                <td>@Html.ActionLink("x", "DeleteCourse", new { id = course.Id }, new{ @class = "close", @style = "color:red; float:none;" })</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-</div>*@
 
 <style>
     th, td {
         border-bottom: 1px solid #AAAAAA;
     }
 </style>
-
-@section scripts{
-    <script>
-        $("button").click(function () {
-            var courseName = $(this).val();
-            alert("add " + courseName + " into Class Schedule");
-        });
-    </script>
-}
